@@ -242,12 +242,13 @@ fn main() {
         config.cxxflag("-DWHISPER_DEBUG");
     }
 
-    // Allow passing any WHISPER or CMAKE compile flags
+    // Allow passing any WHISPER, CMAKE or GGML compile flags
     for (key, value) in env::vars() {
         let is_whisper_flag =
             key.starts_with("WHISPER_") && key != "WHISPER_DONT_GENERATE_BINDINGS";
         let is_cmake_flag = key.starts_with("CMAKE_");
-        if is_whisper_flag || is_cmake_flag {
+        let is_ggml_flag = key.starts_with("GGML_");
+        if is_whisper_flag || is_cmake_flag || is_ggml_flag {
             config.define(&key, &value);
         }
     }
